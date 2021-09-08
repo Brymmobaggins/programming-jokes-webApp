@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jokes Generator</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+   
+  <body>
+    <div class="container">
+      <h1>Programming Jokes</h1>
+      <div id="joke" class="joke"></div>
+      <button id="jokeBtn" class="btn">click to laugh 😁</button>
+    </div>
+    
+  <script>
+    const JokeText = document.getElementById("joke")
+    const jokeBtn = document.getElementById("jokeBtn")
+
+
+    jokeBtn.addEventListener("click", generateJokes)
+    generateJokes()
+
+    async function generateJokes(){
+      const res = await fetch(
+        "https://v2.jokeapi.dev/joke/Miscellaneous,Spooky?blacklistFlags=religious,political,racist,sexist,sexist,explicit"
+      )
+      const data = await res.json()
+      console.log(data)
+      console.log(data.setup)
+      console.log(data.delivery)
+
+      let joke = ""
+      if (data.joke == undefined){
+        joke = `${data.setup} <br/> ${data.delivery}`
+      }else{
+        joke = data.joke
+      }
+      JokeText.innerHTML = joke
+
+    }
+  </script>
+</html>
